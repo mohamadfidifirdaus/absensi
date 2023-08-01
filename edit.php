@@ -1,6 +1,6 @@
 
 
-<!-- Proses Penyimpanan -- >
+<!-- Proses Penyimpanan -->
 	<?php 
 
 		include "koneksi.php";

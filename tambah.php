@@ -1,44 +1,44 @@
 
 
-<!-- Proses Penyimpanan -- >
+<!-- Proses Penyimpanan -->
 	<?php 
 
 		include "koneksi.php";
-		echo json_encode($_POST);
+
 		//jika tombol simpan diklik
 		if(isset($_POST['btnSimpan']))
 		{
-			echo "test";
 			//baca isi inputan form
-			//$nokartu = $_POST['nokartu'];
-			//$nama = $_POST['nama'];
-			//$alamat = $_POST['alamat'];
+			$nokartu = $_POST['nokartu'];
+			$nama = $_POST['nama'];
+			$alamat = $_POST['alamat'];
 
 			//simpan ke tabel karyawan
-			//$simpan = mysqli_query($konek, "insert into karyawan(nokartu, nama, alamat) values ( '$nokartu', '$nama', '$alamat')");
+			$simpan = mysqli_query($konek, "insert into karyawan(nokartu, nama, alamat) values ( '$nokartu', '$nama', '$alamat')");
 
 			//jika berhasil tersimpan, tampilkan pesan tersimpan
 			//kemabali ke data karyawan
 
-			//if($simpan)
-			//{
+			if($simpan)
+			{
 				echo "
 
 			<script>
 			alert('Berhasil');
+			location.replace('datakaryawan.php');
 			</script>
 				";
-			//}
-			//else
-			//	{
-			//	echo "
+			}
+			else
+				{
+				echo "
 
-			//<script>
-			//alert('gagal');
-			//location.replace('datakaryawan.php');
-			//</script>
-			//	";
-		//	}
+			<script>
+			alert('gagal');
+			location.replace('datakaryawan.php');
+			</script>
+				";
+			}
 		}
 	 ?> 
 
@@ -48,7 +48,20 @@
 <head>
 	<?php include "header.php"; ?>
 	<title>Tambah Data Karyawan</title>
-	<!DOCTYPE html>
+
+
+	<!-- Pembacaan no kartu otomatis -->
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+			setInterval(function(){
+				$("#norfid").load('nokartu.php')
+			}, 0); //0 ini adalah timer perbacaan file kertu. 1000 = 1 detik.
+		});
+
+
+	</script>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Form Pengisian</title>
@@ -63,12 +76,12 @@
 		<h3>Tambah Data Karyawan</h3>
 
 		<!-- Form input -->
-		 <form method="POST">
-			<div class="form-group">
-				<label>No. Kartu</label><br>
-				<input type="text" name="nokartu" id="nokartu" placeholder="No Kartu RFID" class="form-control" style="width: 200px ">
-			
-			</div>
+		<form method="POST">
+
+			<!-- Ini nanti akan menjalankan tap kartu RFID nya -->
+			<div id="norfid"></div>
+
+
 			<div class="form-group"><br>
 				<label>Nama Karyawan</label><br>
 				<input type="text" name="nama" id="nama" placeholder="Nama Lengkap" class="form-control" style="width: 200px ">
